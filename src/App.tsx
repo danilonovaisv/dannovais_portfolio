@@ -1,14 +1,11 @@
-'use client';
-
 import React from 'react';
-import Header from './components/layout/Header';
-import Hero from './components/hero/Hero';
-import Manifesto from './components/hero/Manifesto';
-import PortfolioShowcase from './components/portfolio/PortfolioShowcase';
-import FeaturedProjects from './components/portfolio/FeaturedProjects';
-import Clients from './components/clients/BrandsStrip';
-import Contact from './components/Contact/ContactSection';
-import Footer from './components/layout/Footer';
+import Header from './components/Header';
+import Hero from './components/Hero';
+import PortfolioShowcase from './components/PortfolioShowcase';
+import FeaturedProjects from './components/FeaturedProjects';
+import Clients from './components/Clients';
+import Contact from './components/Contact';
+import Footer from './components/Footer';
 
 function App() {
   return (
@@ -17,7 +14,7 @@ function App() {
       
       <main>
         <Hero />
-        <Manifesto />
+        {/* Manifesto agora está integrado ao Hero */}
         <PortfolioShowcase />
         <FeaturedProjects />
         <Clients />

@@ -1,37 +1,50 @@
-"use client";
+import React, { useRef } from 'react';
+import { Canvas, useFrame } from '@react-three/fiber';
+import { TorusKnot, Environment, Float, PerspectiveCamera } from '@react-three/drei';
+import { Mesh } from 'three';
 
-<<<<<<< HEAD
-import { Environment } from "@react-three/drei";
-import { Canvas } from "@react-three/fiber";
-import React, { Suspense } from "react";
-=======
-import onEnvironmentrom "@rea@ct-th-three/dreiree/drei";
-import { Canvas } from "@react-three/fiber";
-import React, ReSuspenseense } frm "re
->>>>>>> 64a734f51e877fdfee3da108fec5e85c9fe9665d
-import HeroGlassTorus from "./HeroGlassTorus";
+const AnimatedShape = () => {
+  const meshRef = useRef<Mesh>(null);
 
-const Scene3D: React.FC = () => {
+  useFrame((state) => {
+    if (meshRef.current) {
+      meshRef.current.rotation.x = state.clock.getElapsedTime() * 0.2;
+      meshRef.current.rotation.y = state.clock.getElapsedTime() * 0.15;
+    }
+  });
+
   return (
-    <Canvas
-      className="h-full w-full"
-      dpr={[1, 1.5]}
-      camera={{ position: [0, 0, 3.2], fov: 35 }}
-    >
-<<<<<<< HEAD
-=======
-      {/* Deixa o fundo ser controlado pelo CSS, não pelo WebGL */}
->>>>>>> 64a734f51e877fdfee3da108fec5e85c9fe9665d
-      <color attach="background" args={["#f4f5f7"]} />
-      <ambientLight intensity={0.3} />
-      <directionalLight intensity={1.2} position={[3.5, 3.5, 2.5]} />
-      <directionalLight intensity={0.6} position={[-3, -2, -2]} />
+    <Float speed={2} rotationIntensity={0.5} floatIntensity={0.5}>
+      <TorusKnot ref={meshRef} args={[1, 0.35, 128, 32]} position={[0, 0, 0]}>
+         <meshPhysicalMaterial 
+            color="#ffffff"
+            roughness={0.15} 
+            metalness={0.1}
+            transmission={0.9} 
+            thickness={1.5}
+            clearcoat={1}
+            clearcoatRoughness={0.1}
+            ior={1.5}
+         />
+      </TorusKnot>
+    </Float>
+  );
+};
 
-      <Suspense fallback={null}>
-        <HeroGlassTorus />
-        <Environment preset="city" background={false} />
-      </Suspense>
-    </Canvas>
+const Scene3D: React.FC<{ className?: string }> = ({ className }) => {
+  return (
+    <div className={className}>
+      <Canvas dpr={[1, 2]} gl={{ alpha: true, antialias: true }}>
+        <PerspectiveCamera makeDefault position={[0, 0, 5]} />
+        <ambientLight intensity={0.5} />
+        <spotLight position={[10, 10, 10]} angle={0.15} penumbra={1} intensity={1} />
+        <pointLight position={[-10, -10, -10]} intensity={0.5} />
+        
+        <AnimatedShape />
+        
+        <Environment preset="city" />
+      </Canvas>
+    </div>
   );
 };
 

@@ -8,7 +8,7 @@ import { useGLTF } from '@react-three/drei'
 import React from 'react'
 
 export function Model(props) {
-  const { nodes, materials } = useGLTF('/torus_dan-transformed.glb')
+  const { nodes, materials } = useGLTF('/torus_dan.glb')
   return (
     <group {...props} dispose={null}>
       <mesh geometry={nodes.Retopo_Cube001.geometry} material={materials['Dispersed Glass.003']} position={[-0.099, -0.073, 1.145]} rotation={[-1.148, 0.732, 1.807]} scale={173.33} />

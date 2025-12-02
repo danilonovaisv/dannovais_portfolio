@@ -1,111 +1,90 @@
-"use client";
+import React, { useRef, useMemo } from 'react';
+import { Canvas, useFrame, useThree } from '@react-three/fiber';
+import { useGLTF, MeshTransmissionMaterial, Environment, Float, PerspectiveCamera, Text } from '@react-three/drei';
+import * as THREE from 'three';
 
-import { MeshTransmissionMaterial, useGLTF } from "@react-three/drei";
-import { useFrame, useThree } from "@react-three/fiber";
-import { useReducedMotion } from "framer-motion";
-import React, { useMemo, useRef } from "react";
-import * as THREE from "three";
+// Type definition for the GLTF result
+type GLTFResult = {
+  nodes: {
+    Retopo_Cube001?: THREE.Mesh;
+    [key: string]: any;
+  };
+  materials: {
+    [key: string]: THREE.Material;
+  };
+};
 
-type GlassMesh = THREE.Mesh<
-  THREE.BufferGeometry,
-  THREE.Material | THREE.Material[]
->;
-
-type TorusGroupProps = JSX.IntrinsicElements["group"];
-
-const MODEL_PATH = "/media/torus_dan.glb";
-
-const HeroGlassTorus: React.FC<TorusGroupProps> = (props) => {
-  const groupRef = useRef<THREE.Group>(null);
-  const gltf = useGLTF(MODEL_PATH);
-  const reduceMotion = useReducedMotion();
-  const { mouse } = useThree();
-
-  const geometry = useMemo(() => {
-    let found: GlassMesh | null = null;
-
-    gltf.scene.traverse((obj) => {
-      if (!found && (obj as GlassMesh).isMesh) {
-        found = obj as GlassMesh;
-      }
-    });
-
-    return found?.geometry ?? undefined;
-  }, [gltf]);
-
+const TorusModel = () => {
+  const { nodes } = useGLTF('/media/torus_dan.glb') as unknown as GLTFResult;
+  const { viewport } = useThree();
+  const meshRef = useRef<THREE.Mesh>(null);
+  
   useFrame((state, delta) => {
-    if (!groupRef.current) return;
-
-    const t = state.clock.getElapsedTime();
-
-    const targetRotY = reduceMotion ? 0.5 : t * 0.35;
-    const targetRotX = reduceMotion ? 0.3 : 0.4 + mouse.y * 0.4;
-
-    const targetPosX = reduceMotion ? 0 : mouse.x * 0.25;
-    const targetPosY = reduceMotion ? 0 : mouse.y * -0.25;
-
-    groupRef.current.rotation.y = THREE.MathUtils.damp(
-      groupRef.current.rotation.y,
-      targetRotY,
-      3,
-      delta
-    );
-    groupRef.current.rotation.x = THREE.MathUtils.damp(
-      groupRef.current.rotation.x,
-      targetRotX,
-      3,
-      delta
-    );
-
-    groupRef.current.position.x = THREE.MathUtils.damp(
-      groupRef.current.position.x,
-      targetPosX,
-      4,
-      delta
-    );
-    groupRef.current.position.y = THREE.MathUtils.damp(
-      groupRef.current.position.y,
-      targetPosY,
-      4,
-      delta
-    );
+    if (meshRef.current) {
+      // Animation based on the PDF tutorial: Constant rotation
+      // adjusted slightly for smooth framerate independence using delta
+      meshRef.current.rotation.x += delta * 0.5;
+      meshRef.current.rotation.y += delta * 0.2;
+    }
   });
 
+  const geometry = nodes.Retopo_Cube001?.geometry;
+
+  if (!geometry) return null;
+
   return (
-    <group
-      ref={groupRef}
-      {...props}
-      dispose={null}
-      position={[0, 0, 0]}
-      rotation={[0.4, 0.6, 0]}
-    >
-      {geometry && (
-        <mesh geometry={geometry} castShadow receiveShadow>
-          <MeshTransmissionMaterial
-            backside
-            samples={12}
-            resolution={768}
-            thickness={0.6}
-            ior={1.23}
-            chromaticAberration={0.05}
-            anisotropicBlur={0.2}
-            distortion={0.52}
-            distortionScale={0.36}
-            temporalDistortion={reduceMotion ? 0 : 0.22}
-            roughness={0.08}
-            transmission={1}
-            clearcoat={1}
-            clearcoatRoughness={0.02}
-            attenuationDistance={1.4}
-            attenuationColor="#88b6ff"
-            color="#ffffff"
-          />
-        </mesh>
-      )}
+    // Responsive scaling based on viewport width as per tutorial
+    // Increased scale from 3.5 to 2.8 for larger appearance as requested
+    <group scale={viewport.width / 2.8}>
+      <mesh 
+        ref={meshRef}
+        geometry={geometry}
+        rotation={[0, 0, 0]}
+      >
+        {/* Material Settings based on the "3D Glass Effect" tutorial */}
+        <MeshTransmissionMaterial 
+           backside={true}
+           samples={16}
+           resolution={512}
+           
+           // Tutorial specific properties
+           thickness={0.25}
+           roughness={0}
+           transmission={1}
+           ior={1.2}
+           chromaticAberration={0.04}
+           
+           // Adding distortion to keep the "liquid" feel mentioned in project specs
+           distortion={0.5}
+           distortionScale={0.5}
+           temporalDistortion={0.1}
+           
+           color="#ffffff"
+           background={new THREE.Color('#F4F5F7')} // Matching site background for blending
+        />
+      </mesh>
     </group>
   );
 };
 
-useGLTF.preload(MODEL_PATH);
+const HeroGlassTorus: React.FC<{ className?: string }> = ({ className }) => {
+  return (
+    <div className={`w-full h-full ${className}`}>
+      <Canvas dpr={[1, 2]} gl={{ alpha: true, antialias: true }}>
+        <PerspectiveCamera makeDefault position={[0, 0, 5]} fov={45} />
+        
+        {/* Lighting to enhance the glass effect */}
+        <ambientLight intensity={0.5} />
+        <directionalLight position={[10, 10, 5]} intensity={2} color="#ffffff" />
+        
+        <TorusModel />
+        
+        <Environment preset="city" />
+      </Canvas>
+    </div>
+  );
+};
+
+useGLTF.preload('/media/torus_dan.glb');
 
 export default HeroGlassTorus;
