@@ -1,7 +1,7 @@
 import React from 'react';
 import { motion } from 'framer-motion';
 import Image from 'next/image';
-import { FEATURED_PROJECTS } from '../constants';
+import { FEATURED_PROJECTS } from '../../constants';
 import { ArrowRight, ArrowUpRight } from 'lucide-react';
 
 const FeaturedProjects: React.FC = () => {

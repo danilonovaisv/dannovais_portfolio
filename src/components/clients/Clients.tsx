@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
 import Image from 'next/image';
-import { CLIENT_LOGOS } from '../constants';
+import { CLIENT_LOGOS } from '../../constants';
 
 const Clients: React.FC = () => {
   return (

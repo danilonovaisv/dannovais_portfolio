@@ -1,12 +1,12 @@
 import React from 'react';
-import Header from './components/Header';
-import Hero from './components/Hero';
-import Manifesto from './components/Manifesto';
-import PortfolioShowcase from './components/PortfolioShowcase';
-import FeaturedProjects from './components/FeaturedProjects';
-import Clients from './components/Clients';
-import Contact from './components/Contact';
-import Footer from './components/Footer';
+import Header from './components/layout/Header';
+import Hero from './components/hero/Hero';
+import Manifesto from './components/hero/Manifesto';
+import PortfolioShowcase from './components/portfolio/PortfolioShowcase';
+import FeaturedProjects from './components/portfolio/FeaturedProjects';
+import Clients from './components/clients/Clients';
+import Contact from './components/Contact/Contact';
+import Footer from './components/layout/Footer';
 
 function App() {
   return (

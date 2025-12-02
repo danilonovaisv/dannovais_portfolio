@@ -1,6 +1,6 @@
 import React, { useRef } from 'react';
 import { motion, useInView } from 'framer-motion';
-import { CATEGORIES } from '../constants';
+import { CATEGORIES } from '../../constants';
 import { ArrowUpRight, ArrowRight } from 'lucide-react';
 
 const PortfolioShowcase: React.FC = () => {

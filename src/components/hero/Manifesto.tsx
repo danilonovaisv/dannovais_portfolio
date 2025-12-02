@@ -1,6 +1,6 @@
 import React, { useRef, useState } from 'react';
 import { motion } from 'framer-motion';
-import { ASSETS } from '../constants';
+import { ASSETS } from '../../constants';
 import { AlertCircle } from 'lucide-react';
 
 const Manifesto: React.FC = () => {
