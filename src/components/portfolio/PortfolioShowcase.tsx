@@ -1,5 +1,6 @@
 "use client";
 import React, { FC } from 'react';
+import Image from 'next/image';
 import { motion } from 'framer-motion';
 import { CATEGORIES } from '@/constants';
 
@@ -50,21 +51,23 @@ const PortfolioShowcaseSection: FC = () => {
               className="relative border-b border-neutral-200 last:border-b-0 overflow-hidden"
             >
                 {/* Imagem de Fundo (Thumbnail Reveal) */}
-                <motion.div
-                  variants={{
-                    rest: { opacity: 0, scale: 1.05 },
-                    hover: { opacity: 1, scale: 1 }
-                  }}
-                  transition={{ duration: 0.4, ease: "easeOut" }}
-                  className="absolute inset-0 z-0 pointer-events-none"
-                >
-                  <div className="absolute inset-0 bg-black/10 z-10" /> {/* Overlay leve para contraste */}
-                  <img 
-                    src={category.thumbnailUrl} 
+            <motion.div
+              variants={{
+                rest: { opacity: 0, scale: 1.05 },
+                hover: { opacity: 1, scale: 1 }
+              }}
+              transition={{ duration: 0.4, ease: "easeOut" }}
+              className="absolute inset-0 z-0 pointer-events-none relative"
+            >
+              <div className="absolute inset-0 bg-black/10 z-10" /> {/* Overlay leve para contraste */}
+                  <Image
+                    src={category.thumbnailUrl}
                     alt={category.label}
-                    className="w-full h-full object-cover opacity-90"
+                    fill
+                    sizes="(min-width: 768px) 33vw, 100vw"
+                    className="object-cover opacity-90"
                   />
-                </motion.div>
+            </motion.div>
                 
                 {/* Container do Link Interativo */}
                 <Wrapper

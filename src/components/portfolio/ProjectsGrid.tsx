@@ -1,4 +1,5 @@
 import React from 'react';
+import Image from 'next/image';
 import { FEATURED_PROJECTS } from '@/constants';
 
 const ProjectsGrid: React.FC = () => (
@@ -15,11 +16,13 @@ const ProjectsGrid: React.FC = () => (
             key={project.slug}
             className="group flex flex-col rounded-3xl bg-white shadow-xl overflow-hidden border border-transparent transition-all hover:-translate-y-1 hover:border-gray-200"
           >
-            <div className="aspect-[4/3] w-full overflow-hidden">
-              <img
+            <div className="aspect-[4/3] w-full overflow-hidden relative">
+              <Image
                 src={project.imageUrl}
                 alt={project.title}
-                className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-105"
+                fill
+                sizes="(min-width: 1024px) 50vw, 100vw"
+                className="object-cover transition-transform duration-700 group-hover:scale-105"
               />
             </div>
             <div className="flex-1 p-6 flex flex-col gap-3">

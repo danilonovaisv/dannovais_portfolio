@@ -1,4 +1,6 @@
+"use client";
 import React, { useState } from 'react';
+import Image from 'next/image';
 import { motion, useScroll, useMotionValueEvent, AnimatePresence } from 'framer-motion';
 import { NAV_LINKS, ASSETS } from '@/constants';
 import { Menu, X } from 'lucide-react';
@@ -6,6 +8,7 @@ import { Menu, X } from 'lucide-react';
 const Header: React.FC = () => {
   const { scrollY } = useScroll();
   const [isScrolled, setIsScrolled] = useState(false);
+  const [logoError, setLogoError] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
   useMotionValueEvent(scrollY, "change", (latest) => {
@@ -34,15 +37,19 @@ const Header: React.FC = () => {
         {/* Logo */}
         <div className="flex items-center shrink-0">
           <a href="#hero" className="block relative z-50 group">
-             <img 
-              src={ASSETS.logoDark} 
-              alt="Danilo Novais" 
-              className="h-8 md:h-9 w-auto object-contain transition-transform duration-300 group-hover:scale-105"
-              onError={(e) => {
-                  e.currentTarget.style.display = 'none';
-                  e.currentTarget.parentElement!.innerHTML = '<span class="text-2xl font-bold text-dark tracking-tighter">Danilo.</span>';
-              }}
-             />
+            {logoError ? (
+              <span className="text-2xl font-bold text-dark tracking-tighter">Danilo.</span>
+            ) : (
+              <Image
+                src={ASSETS.logoDark}
+                alt="Danilo Novais"
+                width={120}
+                height={48}
+                sizes="120px"
+                className="h-8 md:h-9 w-auto object-contain transition-transform duration-300 group-hover:scale-105"
+                onError={() => setLogoError(true)}
+              />
+            )}
           </a>
         </div>
 

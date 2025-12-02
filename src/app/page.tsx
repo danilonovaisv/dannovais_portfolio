@@ -1,5 +1,4 @@
 // app/page.tsx
-import BrandsStrip from "@/components/clients/BrandsStrip";
 import ContactSection from "@/components/Contact/ContactSection";
 import Footer from "@/components/layout/Footer";
 import Hero from "@/components/hero/Hero";
@@ -7,6 +6,7 @@ import Manifesto from "@/components/hero/Manifesto";
 import PortfolioShowcase from "@/components/portfolio/PortfolioShowcase";
 import ProjectsGrid from "@/components/portfolio/ProjectsGrid";
 import WorkCategories from "@/components/portfolio/WorkCategories";
+import Clients from "@/components/clients/Clients";
 
 export default function HomePage() {
   return (
@@ -16,7 +16,7 @@ export default function HomePage() {
       <PortfolioShowcase />
       <WorkCategories />
       <ProjectsGrid />
-      <BrandsStrip />
+      <Clients />
       <ContactSection />
       <Footer />
     </main>

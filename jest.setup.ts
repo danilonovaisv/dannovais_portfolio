@@ -1,8 +1,8 @@
 import '@testing-library/jest-dom';
 
 class ResizeObserver {
-  constructor(callback: ResizeObserverCallback) {
-    //
+  constructor(_callback?: ResizeObserverCallback) {
+    void _callback;
   }
   observe(): void {}
   unobserve(): void {}
@@ -14,8 +14,9 @@ class IntersectionObserver {
   readonly rootMargin = '';
   readonly thresholds: ReadonlyArray<number> = [];
 
-  constructor(callback: IntersectionObserverCallback, options?: IntersectionObserverInit) {
-    //
+  constructor(_callback?: IntersectionObserverCallback, _options?: IntersectionObserverInit) {
+    void _callback;
+    void _options;
   }
 
   observe(): void {}
