@@ -2,8 +2,8 @@
 
 import { motion, useReducedMotion } from "framer-motion";
 import { ArrowRight } from "lucide-react";
-import Linknext/link
-import Reactrct";
+import Link from "next/link";
+import React from "react";
 
 import Scene3D from "./Scene3D";
 
@@ -117,7 +117,7 @@ const Hero: React.FC = () => {
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.8, duration: 0.5 }}
           >
-            <Link href="/sobre" passHref>
+            <Link href="/sobre" legacyBehavior passHref>
               <motion.a
                 whileHover={{
                   scale: reduceMotion ? 1 : 1.02,
@@ -198,31 +198,3 @@ const Hero: React.FC = () => {
 };
 
 export default Hero;
---- a/src/components/hero/Hero.tsx
-+++ b/src/components/hero/Hero.tsx
-@@ -1,7 +1,7 @@
- "use client";
- 
--import { motion, useReducedMotion }ion, usframer-motioncedMotion } from "framer-motion";
--import { ArrowRight }rowRighlucide-react"lucide-react";
-+import { motion, useReducedMotion } from "framer-motion";
-
-+import { ArrowRight } from "lucide-react";
- import Link from "next/link";
- import React from "react";
-
- 
-
---- a/src/components/hero/Hero.tsx
-+++ b/src/components/hero/Hero.tsx
-@@ -1,7 +1,7 @@
- "use client";
- 
--import { motion, useReducedMotion }ion, usframer-motioncedMotion } from "framer-motion";
--import { ArrowRight }rowRighlucide-react"lucide-react";
-+import { motion, useReducedMotion } from "framer-motion";
-
-+import { ArrowRight } from "lucide-react";
- import Link from "next/link";
- import React from "react";
- 

@@ -1,8 +1,8 @@
 "use client";
 
-import onEnvironmentrom "@rea@ct-th-three/dreiree/drei";
+import { Environment } from "@react-three/drei";
 import { Canvas } from "@react-three/fiber";
-import React, ReSuspenseense } frm "re
+import React, { Suspense } from "react";
 
 import HeroGlassTorus from "./HeroGlassTorus";
 
