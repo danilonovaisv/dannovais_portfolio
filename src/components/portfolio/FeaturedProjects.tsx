@@ -1,5 +1,6 @@
 import React from 'react';
 import { motion } from 'framer-motion';
+import Image from 'next/image';
 import { FEATURED_PROJECTS } from '../constants';
 import { ArrowRight, ArrowUpRight } from 'lucide-react';
 
@@ -59,10 +60,12 @@ const FeaturedProjects: React.FC = () => {
                 <div className={`relative overflow-hidden rounded-sm bg-gray-200 w-full ${aspectRatioClass} mb-6 shadow-sm`}>
                     <div className="absolute inset-0 bg-dark/0 group-hover:bg-dark/5 transition-colors duration-500 z-10" />
                     
-                    <img 
-                        src={project.imageUrl} 
+                    <Image
+                        src={project.imageUrl}
                         alt={project.title}
-                        className="w-full h-full object-cover transition-transform duration-700 ease-out group-hover:scale-105 motion-reduce:transform-none"
+                        fill
+                        className="object-cover transition-transform duration-700 ease-out group-hover:scale-105 motion-reduce:transform-none"
+                        sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 33vw"
                     />
                     
                     {/* Category Tag (Pill) */}

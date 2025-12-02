@@ -1,5 +1,6 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { motion } from 'framer-motion';
+import Image from 'next/image';
 import { CLIENT_LOGOS } from '../constants';
 
 const Clients: React.FC = () => {
@@ -18,24 +19,14 @@ const Clients: React.FC = () => {
         <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-x-8 gap-y-12 items-center justify-items-center">
             {CLIENT_LOGOS.map((logo, index) => (
                 <motion.div
-                    key={index}
+                    key={logo}
                     initial={{ opacity: 0 }}
                     whileInView={{ opacity: 1 }}
                     viewport={{ once: true }}
                     transition={{ delay: index * 0.05 }}
                     className="w-full max-w-[140px] opacity-70 hover:opacity-100 transition-opacity duration-300"
                 >
-                    {/* Placeholder Logic for SVG Logos - styling them white */}
-                    <img 
-                        src={logo} 
-                        alt={`Client ${index + 1}`} 
-                        className="w-full h-auto brightness-0 invert" 
-                        onError={(e) => {
-                            // Fallback if image fails to load
-                            e.currentTarget.style.display = 'none';
-                            e.currentTarget.parentElement!.innerHTML = `<div class="text-white font-bold text-xl opacity-50">CLIENT ${index+1}</div>`;
-                        }}
-                    />
+                    <ClientLogo logo={logo} index={index} />
                 </motion.div>
             ))}
         </div>
@@ -45,3 +36,32 @@ const Clients: React.FC = () => {
 };
 
 export default Clients;
+
+interface ClientLogoProps {
+  logo: string;
+  index: number;
+}
+
+const ClientLogo: React.FC<ClientLogoProps> = ({ logo, index }) => {
+  const [loadFailed, setLoadFailed] = useState(false);
+
+  if (loadFailed) {
+    return (
+      <div className="flex items-center justify-center w-full h-full text-white font-bold tracking-[0.3em] text-xs opacity-60">
+        CLIENT {index + 1}
+      </div>
+    );
+  }
+
+  return (
+    <Image
+      src={logo}
+      alt={`Client ${index + 1}`}
+      width={140}
+      height={70}
+      className="w-full h-full object-contain transition-opacity duration-300 brightness-0 invert"
+      sizes="(max-width: 1024px) 25vw, 140px"
+      onError={() => setLoadFailed(true)}
+    />
+  );
+};

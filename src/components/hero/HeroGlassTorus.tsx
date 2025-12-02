@@ -3,32 +3,17 @@ import { Canvas, useFrame } from '@react-three/fiber';
 import { useGLTF, MeshTransmissionMaterial, Environment, Float, PerspectiveCamera } from '@react-three/drei';
 import * as THREE from 'three';
 
-// Fix for missing JSX intrinsic elements types
-declare module 'react' {
-  namespace JSX {
-    interface IntrinsicElements {
-      mesh: any;
-      ambientLight: any;
-      directionalLight: any;
-      spotLight: any;
-    }
-  }
-}
-
-// Type definition for the GLTF result based on the provided JSX structure
 type GLTFResult = {
   nodes: {
     Retopo_Cube001?: THREE.Mesh;
-    [key: string]: any;
+    [key: string]: THREE.Object3D;
   };
-  materials: {
-    [key: string]: THREE.Material;
-  };
+  materials: Record<string, THREE.Material>;
 };
 
 const TorusModel = () => {
   // Load the model from the specified path
-  const { nodes } = useGLTF('/media/torus_dan.glb') as unknown as GLTFResult;
+  const { nodes } = useGLTF<GLTFResult>('/media/torus_dan.glb');
   const meshRef = useRef<THREE.Mesh>(null);
   
   // Check for reduced motion preference

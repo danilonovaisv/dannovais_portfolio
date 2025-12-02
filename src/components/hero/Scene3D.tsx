@@ -3,18 +3,6 @@ import { Canvas, useFrame } from '@react-three/fiber';
 import { TorusKnot, Environment, Float, PerspectiveCamera } from '@react-three/drei';
 import { Mesh } from 'three';
 
-// Fix for missing JSX intrinsic elements types
-declare module 'react' {
-  namespace JSX {
-    interface IntrinsicElements {
-      meshPhysicalMaterial: any;
-      ambientLight: any;
-      spotLight: any;
-      pointLight: any;
-    }
-  }
-}
-
 const AnimatedShape = () => {
   const meshRef = useRef<Mesh>(null);
 
