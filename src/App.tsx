@@ -6,8 +6,8 @@ import Hero from './components/hero/Hero';
 import Manifesto from './components/hero/Manifesto';
 import PortfolioShowcase from './components/portfolio/PortfolioShowcase';
 import FeaturedProjects from './components/portfolio/FeaturedProjects';
-import Clients from './components/clients/Clients';
-import Contact from './components/Contact/Contact';
+import Clients from './components/clients/BrandsStrip';
+import Contact from './components/Contact/ContactSection';
 import Footer from './components/layout/Footer';
 
 function App() {

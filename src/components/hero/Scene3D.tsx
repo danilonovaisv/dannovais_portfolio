@@ -3,7 +3,6 @@
 import { Environment } from "@react-three/drei";
 import { Canvas } from "@react-three/fiber";
 import React, { Suspense } from "react";
-
 import HeroGlassTorus from "./HeroGlassTorus";
 
 const Scene3D: React.FC = () => {
@@ -13,7 +12,6 @@ const Scene3D: React.FC = () => {
       dpr={[1, 1.5]}
       camera={{ position: [0, 0, 3.2], fov: 35 }}
     >
-      {/* Deixa o fundo ser controlado pelo CSS, não pelo WebGL */}
       <color attach="background" args={["#f4f5f7"]} />
       <ambientLight intensity={0.3} />
       <directionalLight intensity={1.2} position={[3.5, 3.5, 2.5]} />

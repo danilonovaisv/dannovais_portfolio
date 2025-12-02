@@ -10,13 +10,13 @@ const Manifesto: React.FC = () => {
   const reduceMotion = useReducedMotion();
 
   return (
-    <section>
+    <section
       id="manifesto"
       className="relative bg-black text-white"
       aria-label="Manifesto em vídeo"
     >
       <div className="mx-auto max-w-6xl px-6 py-20 sm:py-24">
-        {/* Título opcional / microtexto */}
+        {/* Label / microtexto */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -31,24 +31,23 @@ const Manifesto: React.FC = () => {
         <motion.div
           className="relative overflow-hidden rounded-[32px] bg-zinc-900"
           initial={{ opacity: 0, y: 40, scale: 0.96 }}
-          whileInView={
-            reduceMotion
-              ? { opacity: 1, y: 0, scale: 1 }
-              : { opacity: 1, y: 0, scale: 1 }
-          }
+          whileInView={{ opacity: 1, y: 0, scale: 1 }}
           viewport={{ once: true, margin: "-80px" }}
-          transition={{ duration: 0.7, ease: [0.16, 0.84, 0.44, 1] }}
+          transition={{
+            duration: 0.7,
+            ease: [0.16, 0.84, 0.44, 1],
+          }}
         >
           <video
             className="block h-full w-full object-cover"
             src={MANIFESTO_VIDEO_URL}
-            autoPlay
+            autoPlay={!reduceMotion}
             muted
             loop
             playsInline
+            controls={reduceMotion}
           />
 
-          {/* Overlay inferior com gradiente e texto */}
           <div className="pointer-events-none absolute inset-x-0 bottom-0 flex items-end justify-between gap-4 bg-gradient-to-t from-black/80 via-black/30 to-transparent px-6 pb-6 pt-16">
             <div>
               <p className="text-[11px] font-medium uppercase tracking-[0.14em] text-white/70">

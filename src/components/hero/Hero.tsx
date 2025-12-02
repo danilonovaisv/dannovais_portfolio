@@ -1,10 +1,9 @@
 "use client";
 
+import React from "react";
+import Link from "next/link";
 import { motion, useReducedMotion } from "framer-motion";
 import { ArrowRight } from "lucide-react";
-import Link from "next/link";
-import React from "react";
-
 import Scene3D from "./Scene3D";
 
 const heroLines = ["Design,", "não é só", "estética."];
@@ -69,7 +68,7 @@ const Hero: React.FC = () => {
       className="relative overflow-hidden bg-[#F4F5F7] pb-24 pt-28 sm:pt-32"
     >
       <div className="mx-auto flex min-h-[80vh] max-w-6xl flex-col gap-12 px-6 lg:min-h-[90vh] lg:flex-row lg:items-center lg:gap-16">
-        {/* COLUNA ESQUERDA - TEXTO */}
+        {/* Coluna esquerda - texto */}
         <motion.div
           className="flex-1"
           initial="hidden"
@@ -86,7 +85,7 @@ const Hero: React.FC = () => {
             [ BRAND AWARENESS ]
           </motion.div>
 
-          {/* TÍTULO EM 3 LINHAS */}
+          {/* Título em 3 linhas */}
           <div className="space-y-1">
             {heroLines.map((line, index) => (
               <motion.h1
@@ -100,7 +99,7 @@ const Hero: React.FC = () => {
             ))}
           </div>
 
-          {/* SUBTÍTULO EM BLOCO BRANCO */}
+          {/* Subtítulo */}
           <motion.div
             className="mt-6 inline-flex rounded-2xl bg-white/80 px-5 py-3 text-sm font-medium text-[#111111] shadow-md backdrop-blur"
             initial={{ opacity: 0, y: 20 }}
@@ -110,20 +109,21 @@ const Hero: React.FC = () => {
             [É intenção, é estratégia, é experiência.]
           </motion.div>
 
-          {/* CTA PRINCIPAL */}
+          {/* CTA */}
           <motion.div
             className="mt-8 flex flex-wrap items-center gap-4"
             initial={{ opacity: 0, y: 24 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.8, duration: 0.5 }}
           >
-            <Link href="/sobre" legacyBehavior passHref>
+            <Link href="/sobre">
               <motion.a
-                whileHover={{
-                  scale: reduceMotion ? 1 : 1.02,
-                  y: reduceMotion ? 0 : -1,
-                }}
-                whileTap={{ scale: reduceMotion ? 1 : 0.97, y: 0 }}
+                whileHover={
+                  reduceMotion
+                    ? {}
+                    : { scale: 1.02, y: -1, transition: { duration: 0.18 } }
+                }
+                whileTap={reduceMotion ? {} : { scale: 0.97, y: 0 }}
                 className="group inline-flex items-center gap-2 rounded-full bg-[#0057FF] px-6 py-3 text-sm font-medium text-white shadow-lg shadow-blue-500/30"
               >
                 get to know me better
@@ -133,7 +133,7 @@ const Hero: React.FC = () => {
           </motion.div>
         </motion.div>
 
-        {/* COLUNA DIREITA - 3D + THUMB DO VÍDEO */}
+        {/* Coluna direita - Card 3D + thumb do manifesto */}
         <motion.div
           className="relative flex-1"
           initial="hidden"
@@ -141,12 +141,12 @@ const Hero: React.FC = () => {
           variants={rightColumnVariants}
         >
           <div className="relative mx-auto h-[320px] w-full max-w-[360px] sm:h-[360px] lg:h-[420px]">
-            {/* CARD 3D */}
-            <div className="absolute inset-0 rounded-[34px] bg-white/40 shadow-[0_24px_80px_rgba(15,23,42,0.32)] backdrop-blur-xl">
+            {/* Card 3D */}
+            <div className="absolute inset-0 rounded-[34px] bg-white/40 shadow-[0_24px_80px_rgba(15,23,42,0.32)] backdrop-blur-xl overflow-hidden">
               <Scene3D />
             </div>
 
-            {/* TAG FLUTUANTE NO CARTÃO */}
+            {/* Tag em cima do card */}
             <motion.div
               className="pointer-events-none absolute -top-6 left-6 inline-flex items-center rounded-full bg-white/95 px-4 py-1 text-[10px] font-semibold uppercase tracking-[0.16em] text-slate-800 shadow-md"
               initial={{ opacity: 0, y: -12 }}
@@ -156,7 +156,7 @@ const Hero: React.FC = () => {
               design, estratégia & experiência
             </motion.div>
 
-            {/* THUMB DO MANIFESTO */}
+            {/* Thumb manifesto */}
             <motion.button
               type="button"
               onClick={handleScrollToManifesto}
@@ -169,7 +169,7 @@ const Hero: React.FC = () => {
                   ? {}
                   : { y: -2, scale: 1.01, transition: { duration: 0.2 } }
               }
-              aria-label="Ver manifesto em vídeo"
+              aria-label="Ir para manifesto em vídeo"
             >
               <div className="relative h-10 w-10 overflow-hidden rounded-full bg-black/80">
                 <video

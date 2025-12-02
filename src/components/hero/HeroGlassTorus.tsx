@@ -1,7 +1,7 @@
 "use client";
 
 import { MeshTransmissionMaterial, useGLTF } from "@react-three/drei";
-import { useFrame, useThree } from "@react-three/fiber";
+import { useFrame, useThree, type GroupProps } from "@react-three/fiber";
 import { useReducedMotion } from "framer-motion";
 import React, { useMemo, useRef } from "react";
 import * as THREE from "three";
@@ -11,17 +11,14 @@ type GlassMesh = THREE.Mesh<
   THREE.Material | THREE.Material[]
 >;
 
-interface TorusGroupProps extends JSX.IntrinsicElements["group"] {}
-
 const MODEL_PATH = "/media/torus_dan.glb";
 
-const HeroGlassTorus: React.FC<TorusGroupProps> = (props) => {
+const HeroGlassTorus: React.FC<GroupProps> = (props) => {
   const groupRef = useRef<THREE.Group>(null);
   const gltf = useGLTF(MODEL_PATH);
   const reduceMotion = useReducedMotion();
   const { mouse } = useThree();
 
-  // Pega o primeiro mesh do GLB e reaproveita só a geometria
   const geometry = useMemo(() => {
     let found: GlassMesh | null = null;
 
@@ -39,7 +36,7 @@ const HeroGlassTorus: React.FC<TorusGroupProps> = (props) => {
 
     const t = state.clock.getElapsedTime();
 
-    const targetRotY = reduceMotion ? 0.5 : t * 0.35;
+    const targetRotY = reduceMotion ? 0.6 : t * 0.35;
     const targetRotX = reduceMotion ? 0.3 : 0.4 + mouse.y * 0.4;
 
     const targetPosX = reduceMotion ? 0 : mouse.x * 0.25;
