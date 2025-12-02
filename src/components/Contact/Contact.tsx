@@ -1,3 +1,5 @@
+'use client';
+
 import React from 'react';
 import { motion } from 'framer-motion';
 import { CONTACT_INFO, SOCIALS } from '../../constants';

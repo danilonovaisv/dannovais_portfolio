@@ -1,19 +1,20 @@
+'use client';
+
 import React, { useRef, useMemo } from 'react';
 import { Canvas, useFrame } from '@react-three/fiber';
 import { useGLTF, MeshTransmissionMaterial, Environment, Float, PerspectiveCamera } from '@react-three/drei';
 import * as THREE from 'three';
+import type { GLTF } from 'three-stdlib';
 
-type GLTFResult = {
+type GLTFResult = GLTF & {
   nodes: {
     Retopo_Cube001?: THREE.Mesh;
-    [key: string]: THREE.Object3D;
-  };
-  materials: Record<string, THREE.Material>;
+  } & Record<string, THREE.Object3D>;
 };
 
 const TorusModel = () => {
   // Load the model from the specified path
-  const { nodes } = useGLTF<GLTFResult>('/media/torus_dan.glb');
+  const { nodes } = useGLTF('/media/torus_dan.glb') as GLTFResult;
   const meshRef = useRef<THREE.Mesh>(null);
   
   // Check for reduced motion preference
@@ -71,7 +72,6 @@ const TorusModel = () => {
            distortionScale={0.3}
            temporalDistortion={0.1} // Moving liquid effect
            color="#ffffff"
-           bg="transparent"
         />
       </mesh>
     </Float>

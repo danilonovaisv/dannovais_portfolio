@@ -1,0 +1,69 @@
+===========================================
+ Projeto: dannovais_portfolio
+ Data: Tue Dec  2 04:33:12 -03 2025
+ Package manager detectado: npm
+===========================================
+
+### Ambiente
+
+$ node -v
+v22.21.1
+
+$ npm -v
+11.6.4
+
+Sistema operacional:
+Darwin danilo-novais.local 25.2.0 Darwin Kernel Version 25.2.0: Thu Nov 13 23:35:11 PST 2025; root:xnu-12377.61.11~7/RELEASE_ARM64_T6000 arm64
+
+-------------------------------------------
+### Git status
+
+$ git status -sb
+## main...origin/main
+ M package-lock.json
+?? project-report-20251202-043312.txt
+
+-------------------------------------------
+### Lint (npm run lint)
+
+$ npm run lint
+
+> dannovais_portfolio@0.1.0 lint
+> eslint
+
+
+-------------------------------------------
+### Testes (npm run test)
+
+$ npm run test
+npm error Missing script: "test"
+npm error
+npm error To see a list of scripts, run:
+npm error   npm run
+npm error A complete log of this run can be found in: /Users/danilonovais/.npm/_logs/2025-12-02T07_33_13_975Z-debug-0.log
+
+-------------------------------------------
+### Dependências desatualizadas
+
+$ npm outdated
+
+-------------------------------------------
+### Depcheck (dependências não usadas / faltando)
+
+$ npx depcheck
+Unused devDependencies
+* @tailwindcss/postcss
+* autoprefixer
+* postcss
+* tailwindcss
+Missing dependencies
+* vite: ./vite.config.ts
+* @vitejs/plugin-react: ./vite.config.ts
+
+-------------------------------------------
+### Observações
+Use este relatório para colar em uma IA (Codex/ChatGPT) e pedir:
+- Sugestões para corrigir erros de lint e testes;
+- Ajustes de dependências desatualizadas ou não utilizadas;
+- Refatorações sugeridas com base nos erros.
+

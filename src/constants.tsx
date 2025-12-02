@@ -1,4 +1,4 @@
-import { NavLink, Project, ProjectCategory } from './types';
+import { NavLink, Project, ProjectCategory } from '../types';
 import { Instagram, Facebook, Linkedin, Twitter, Phone, Mail, Globe } from 'lucide-react';
 import React from 'react';
 
