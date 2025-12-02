@@ -1,55 +1,70 @@
-'use client';
+"use client";
 
-import React, { useRef, useState } from 'react';
-import { motion } from 'framer-motion';
-import { ASSETS } from '../../constants';
-import { AlertCircle } from 'lucide-react';
+import { motion, useReducedMotion } from "framer-motion";
+import React from "react";
+
+const MANIFESTO_VIDEO_URL =
+  "https://aymuvxysygrwoicsjgxj.supabase.co/storage/v1/object/public/project-videos/VIDEO-APRESENTACAO-PORTFOLIO.mp4";
 
 const Manifesto: React.FC = () => {
-  const [hasError, setHasError] = useState(false);
-  const videoRef = useRef<HTMLVideoElement>(null);
+  const reduceMotion = useReducedMotion();
 
   return (
-    <section id="manifesto" className="w-full bg-light">
-      {/* Video Player Container - Full Width Edge-to-Edge */}
-      <motion.div
-        initial={{ opacity: 0 }}
-        whileInView={{ opacity: 1 }}
-        viewport={{ once: true }}
-        transition={{ duration: 1.0, ease: "easeOut" }}
-        className="relative w-full aspect-video md:aspect-[21/9] overflow-hidden bg-gray-100 shadow-sm"
-      >
-        {!hasError ? (
+    <section>
+      id="manifesto"
+      className="relative bg-black text-white"
+      aria-label="Manifesto em vídeo"
+    >
+      <div className="mx-auto max-w-6xl px-6 py-20 sm:py-24">
+        {/* Título opcional / microtexto */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, margin: "-80px" }}
+          transition={{ duration: 0.5 }}
+          className="mb-6 text-xs font-medium uppercase tracking-[0.16em] text-white/60"
+        >
+          manifesto em vídeo
+        </motion.div>
+
+        {/* Container do vídeo */}
+        <motion.div
+          className="relative overflow-hidden rounded-[32px] bg-zinc-900"
+          initial={{ opacity: 0, y: 40, scale: 0.96 }}
+          whileInView={
+            reduceMotion
+              ? { opacity: 1, y: 0, scale: 1 }
+              : { opacity: 1, y: 0, scale: 1 }
+          }
+          viewport={{ once: true, margin: "-80px" }}
+          transition={{ duration: 0.7, ease: [0.16, 0.84, 0.44, 1] }}
+        >
           <video
-            ref={videoRef}
-            src={ASSETS.videoManifesto}
-            className="w-full h-full object-cover"
+            className="block h-full w-full object-cover"
+            src={MANIFESTO_VIDEO_URL}
             autoPlay
             muted
             loop
             playsInline
-            controls
-            onError={() => setHasError(true)}
-            aria-label="Vídeo Manifesto do Portfólio"
           />
-        ) : (
-          <div className="absolute inset-0 flex flex-col items-center justify-center bg-gray-100 text-gray-500 p-6 text-center">
-            <AlertCircle className="w-10 h-10 mb-3 opacity-50" />
-            <p className="font-medium">Não foi possível carregar o vídeo.</p>
-            <a 
-              href={ASSETS.videoManifesto} 
-              target="_blank" 
-              rel="noopener noreferrer"
-              className="mt-2 text-primary text-sm hover:underline underline-offset-4"
-            >
-              Assistir diretamente
-            </a>
-          </div>
-        )}
 
-        {/* Subtle Inner Shadow for Depth */}
-        <div className="absolute inset-0 pointer-events-none shadow-[inset_0_0_100px_rgba(0,0,0,0.15)]" />
-      </motion.div>
+          {/* Overlay inferior com gradiente e texto */}
+          <div className="pointer-events-none absolute inset-x-0 bottom-0 flex items-end justify-between gap-4 bg-gradient-to-t from-black/80 via-black/30 to-transparent px-6 pb-6 pt-16">
+            <div>
+              <p className="text-[11px] font-medium uppercase tracking-[0.14em] text-white/70">
+                [ manifesto ]
+              </p>
+              <p className="mt-2 max-w-md text-sm leading-relaxed text-white/90">
+                Um resumo em vídeo sobre como enxergo design, estratégia e
+                experiência — e como isso se conecta aos projetos do portfólio.
+              </p>
+            </div>
+            <div className="hidden text-xs font-medium text-white/70 sm:block">
+              clique no vídeo para pausar
+            </div>
+          </div>
+        </motion.div>
+      </div>
     </section>
   );
 };

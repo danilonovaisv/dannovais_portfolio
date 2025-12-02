@@ -1,103 +1,112 @@
-'use client';
+"use client";
 
-import React, { useRef, useMemo } from 'react';
-import { Canvas, useFrame } from '@react-three/fiber';
-import { useGLTF, MeshTransmissionMaterial, Environment, Float, PerspectiveCamera } from '@react-three/drei';
-import * as THREE from 'three';
-import type { GLTF } from 'three-stdlib';
+import { MeshTransmissionMaterial, useGLTF } from "@react-three/drei";
+import { useFrame, useThree } from "@react-three/fiber";
+import { useReducedMotion } from "framer-motion";
+import React, { useMemo, useRef } from "react";
+import * as THREE from "three";
 
-type GLTFResult = GLTF & {
-  nodes: {
-    Retopo_Cube001?: THREE.Mesh;
-  } & Record<string, THREE.Object3D>;
-};
+type GlassMesh = THREE.Mesh<
+  THREE.BufferGeometry,
+  THREE.Material | THREE.Material[]
+>;
 
-const TorusModel = () => {
-  // Load the model from the specified path
-  const { nodes } = useGLTF('/media/torus_dan.glb') as GLTFResult;
-  const meshRef = useRef<THREE.Mesh>(null);
-  
-  // Check for reduced motion preference
-  const prefersReducedMotion = useMemo(() => {
-    if (typeof window !== 'undefined') {
-       return window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-    }
-    return false;
-  }, []);
+interface TorusGroupProps extends JSX.IntrinsicElements["group"] {}
 
-  useFrame((state) => {
-    if (!meshRef.current || prefersReducedMotion) return;
+const MODEL_PATH = "/media/torus_dan.glb";
 
-    const scrollY = window.scrollY;
-    const { x, y } = state.pointer;
+const HeroGlassTorus: React.FC<TorusGroupProps> = (props) => {
+  const groupRef = useRef<THREE.Group>(null);
+  const gltf = useGLTF(MODEL_PATH);
+  const reduceMotion = useReducedMotion();
+  const { mouse } = useThree();
 
-    // Interactive rotation logic:
-    // 1. Constant slow rotation (optional, kept very subtle)
-    // 2. Scroll-based rotation (simulating turning the object as you scroll)
-    // 3. Mouse parallax (tilting towards cursor)
-    
-    // Base rotation + Scroll influence
-    meshRef.current.rotation.x = (scrollY * 0.0015) + (y * 0.1); 
-    meshRef.current.rotation.y = (state.clock.elapsedTime * 0.05) + (scrollY * 0.002) + (x * 0.1);
+  // Pega o primeiro mesh do GLB e reaproveita só a geometria
+  const geometry = useMemo(() => {
+    let found: GlassMesh | null = null;
+
+    gltf.scene.traverse((obj) => {
+      if (!found && (obj as GlassMesh).isMesh) {
+        found = obj as GlassMesh;
+      }
+    });
+
+    return found?.geometry ?? undefined;
+  }, [gltf]);
+
+  useFrame((state, delta) => {
+    if (!groupRef.current) return;
+
+    const t = state.clock.getElapsedTime();
+
+    const targetRotY = reduceMotion ? 0.5 : t * 0.35;
+    const targetRotX = reduceMotion ? 0.3 : 0.4 + mouse.y * 0.4;
+
+    const targetPosX = reduceMotion ? 0 : mouse.x * 0.25;
+    const targetPosY = reduceMotion ? 0 : mouse.y * -0.25;
+
+    groupRef.current.rotation.y = THREE.MathUtils.damp(
+      groupRef.current.rotation.y,
+      targetRotY,
+      3,
+      delta
+    );
+    groupRef.current.rotation.x = THREE.MathUtils.damp(
+      groupRef.current.rotation.x,
+      targetRotX,
+      3,
+      delta
+    );
+
+    groupRef.current.position.x = THREE.MathUtils.damp(
+      groupRef.current.position.x,
+      targetPosX,
+      4,
+      delta
+    );
+    groupRef.current.position.y = THREE.MathUtils.damp(
+      groupRef.current.position.y,
+      targetPosY,
+      4,
+      delta
+    );
   });
 
-  // Use the specific geometry from the file if available
-  const geometry = nodes.Retopo_Cube001?.geometry;
-
-  if (!geometry) return null;
-
   return (
-    <Float 
-      speed={prefersReducedMotion ? 0 : 2} 
-      rotationIntensity={prefersReducedMotion ? 0 : 0.5} 
-      floatIntensity={prefersReducedMotion ? 0 : 0.5}
+    <group
+      ref={groupRef}
+      {...props}
+      dispose={null}
+      position={[0, 0, 0]}
+      rotation={[0.4, 0.6, 0]}
     >
-      <mesh 
-        ref={meshRef}
-        geometry={geometry}
-        scale={1.8} // Adjusted scale to fill the frame nicely
-        rotation={[-0.5, 0.5, 0]} // Initial pose
-      >
-        {/* Liquid Glass Material settings */}
-        <MeshTransmissionMaterial 
-           backside
-           samples={6}
-           resolution={512}
-           thickness={0.5}
-           roughness={0.05}
-           ior={1.2} // Index of refraction for glass-like substance
-           chromaticAberration={0.06}
-           anisotropy={0.1}
-           distortion={0.4} // Liquid distortion effect
-           distortionScale={0.3}
-           temporalDistortion={0.1} // Moving liquid effect
-           color="#ffffff"
-        />
-      </mesh>
-    </Float>
+      {geometry && (
+        <mesh geometry={geometry} castShadow receiveShadow>
+          <MeshTransmissionMaterial
+            backside
+            samples={12}
+            resolution={768}
+            thickness={0.6}
+            ior={1.23}
+            chromaticAberration={0.05}
+            anisotropicBlur={0.2}
+            distortion={0.52}
+            distortionScale={0.36}
+            temporalDistortion={reduceMotion ? 0 : 0.22}
+            roughness={0.08}
+            transmission={1}
+            clearcoat={1}
+            clearcoatRoughness={0.02}
+            attenuationDistance={1.4}
+            attenuationColor="#88b6ff"
+            color="#ffffff"
+          />
+        </mesh>
+      )}
+    </group>
   );
 };
 
-const HeroGlassTorus: React.FC<{ className?: string }> = ({ className }) => {
-  return (
-    <div className={`w-full h-full ${className}`}>
-      <Canvas dpr={[1, 1.5]} gl={{ alpha: true, antialias: true }}>
-        <PerspectiveCamera makeDefault position={[0, 0, 6]} fov={45} />
-        
-        {/* Lighting Setup */}
-        <ambientLight intensity={0.5} />
-        <directionalLight position={[10, 10, 5]} intensity={1} color="#ffffff" />
-        <spotLight position={[-10, -10, -5]} intensity={0.5} color="#0057FF" />
-        
-        <TorusModel />
-        
-        {/* Environment preset "city" as requested for nice reflections */}
-        <Environment preset="city" />
-      </Canvas>
-    </div>
-  );
-};
-
-useGLTF.preload('/media/torus_dan.glb');
+useGLTF.preload(MODEL_PATH);
 
 export default HeroGlassTorus;

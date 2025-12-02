@@ -1,11 +1,12 @@
 'use client';
 
-import React from 'react';
+import React, { useId } from 'react';
 import { motion } from 'framer-motion';
-import { CONTACT_INFO, SOCIALS } from '../../constants';
 import { ArrowRight } from 'lucide-react';
+import { CONTACT_INFO, SOCIALS } from '../../constants';
 
 const Contact: React.FC = () => {
+  const idPrefix = useId();
   return (
     <section id="contact" className="py-24 bg-light">
       <div className="container mx-auto px-6 md:px-12">
@@ -21,9 +22,9 @@ const Contact: React.FC = () => {
             <p className="text-xl text-dark mb-12">Tem uma pergunta ou quer trabalhar junto?</p>
 
             <div className="space-y-6 mb-12">
-                {CONTACT_INFO.map((item, idx) => (
+                {CONTACT_INFO.map((item) => (
                     <a 
-                        key={idx} 
+                        key={item.label} 
                         href={item.href}
                         className="flex items-center gap-4 text-dark hover:text-primary transition-colors text-lg font-medium group"
                     >
@@ -64,15 +65,15 @@ const Contact: React.FC = () => {
                 className="space-y-6"
             >
                 {/* Honeypot */}
-                <input type="text" name="_honey" style={{display: 'none'}} />
+                <input type="text" name="_honey" className="hidden" />
                 {/* Disable Captcha */}
                 <input type="hidden" name="_captcha" value="false" />
 
                 <div>
-                    <label htmlFor="name" className="block text-sm font-semibold text-gray-600 mb-2">Seu nome</label>
+                    <label htmlFor={`${idPrefix}-name`} className="block text-sm font-semibold text-gray-600 mb-2">Seu nome</label>
                     <input 
                         type="text" 
-                        id="name" 
+                        id={`${idPrefix}-name`} 
                         name="name" 
                         required 
                         className="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary transition-all"
@@ -81,10 +82,10 @@ const Contact: React.FC = () => {
                 </div>
 
                 <div>
-                    <label htmlFor="email" className="block text-sm font-semibold text-gray-600 mb-2">Seu email</label>
+                    <label htmlFor={`${idPrefix}-email`} className="block text-sm font-semibold text-gray-600 mb-2">Seu email</label>
                     <input 
                         type="email" 
-                        id="email" 
+                        id={`${idPrefix}-email`} 
                         name="email" 
                         required 
                         className="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary transition-all"
@@ -93,10 +94,10 @@ const Contact: React.FC = () => {
                 </div>
 
                 <div>
-                    <label htmlFor="phone" className="block text-sm font-semibold text-gray-600 mb-2">Telefone</label>
+                    <label htmlFor={`${idPrefix}-phone`} className="block text-sm font-semibold text-gray-600 mb-2">Telefone</label>
                     <input 
                         type="tel" 
-                        id="phone" 
+                        id={`${idPrefix}-phone`} 
                         name="phone" 
                         required 
                         className="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary transition-all"
@@ -105,9 +106,9 @@ const Contact: React.FC = () => {
                 </div>
 
                 <div>
-                    <label htmlFor="message" className="block text-sm font-semibold text-gray-600 mb-2">Sua mensagem</label>
+                    <label htmlFor={`${idPrefix}-message`} className="block text-sm font-semibold text-gray-600 mb-2">Sua mensagem</label>
                     <textarea 
-                        id="message" 
+                        id={`${idPrefix}-message`} 
                         name="message" 
                         required 
                         rows={4}
