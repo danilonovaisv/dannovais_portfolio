@@ -1,11 +1,9 @@
-
-import React, { FC, useState } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
-import { CATEGORIES } from '../constants';
+"use client";
+import React, { FC } from 'react';
+import { motion } from 'framer-motion';
+import { CATEGORIES } from '@/constants';
 
 const PortfolioShowcaseSection: FC = () => {
-  // Estado para controlar qual categoria está sendo hoverada para efeitos globais se necessário
-  const [hoveredIndex, setHoveredIndex] = useState<number | null>(null);
 
   // Função para determinar o alinhamento baseada no índice
   const getAlignmentClass = (index: number) => {
@@ -45,14 +43,12 @@ const PortfolioShowcaseSection: FC = () => {
             const href = `/portfolio?category=${category.id}`;
 
             return (
-              <motion.div
-                key={category.id}
-                initial="rest"
-                whileHover="hover"
-                onHoverStart={() => setHoveredIndex(index)}
-                onHoverEnd={() => setHoveredIndex(null)}
-                className="relative border-b border-neutral-200 last:border-b-0 overflow-hidden"
-              >
+            <motion.div
+              key={category.id}
+              initial="rest"
+              whileHover="hover"
+              className="relative border-b border-neutral-200 last:border-b-0 overflow-hidden"
+            >
                 {/* Imagem de Fundo (Thumbnail Reveal) */}
                 <motion.div
                   variants={{

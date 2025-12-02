@@ -1,13 +1,14 @@
-import React, { useRef, useMemo } from 'react';
+"use client";
+import React, { useRef } from 'react';
 import { Canvas, useFrame, useThree } from '@react-three/fiber';
-import { useGLTF, MeshTransmissionMaterial, Environment, Float, PerspectiveCamera, Text } from '@react-three/drei';
+import { useGLTF, MeshTransmissionMaterial, Environment, PerspectiveCamera } from '@react-three/drei';
 import * as THREE from 'three';
 
 // Type definition for the GLTF result
 type GLTFResult = {
   nodes: {
     Retopo_Cube001?: THREE.Mesh;
-    [key: string]: any;
+    [key: string]: THREE.Mesh | THREE.Object3D | undefined;
   };
   materials: {
     [key: string]: THREE.Material;

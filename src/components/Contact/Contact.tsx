@@ -1,6 +1,7 @@
+"use client";
 import React from 'react';
 import { motion } from 'framer-motion';
-import { CONTACT_INFO, SOCIALS } from '../constants';
+import { CONTACT_INFO, SOCIALS } from '@/constants';
 import { ArrowRight } from 'lucide-react';
 
 const Contact: React.FC = () => {

@@ -1,8 +1,9 @@
+"use client";
 import React, { useRef } from 'react';
 import { motion, useScroll, useTransform, Variants } from 'framer-motion';
 import HeroGlassTorus from './HeroGlassTorus';
 import { ArrowRight, Play } from 'lucide-react';
-import { ASSETS } from '../constants';
+import { ASSETS } from '@/constants';
 
 const Hero: React.FC = () => {
   const sectionRef = useRef<HTMLElement>(null);

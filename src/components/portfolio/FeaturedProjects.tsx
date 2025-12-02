@@ -1,6 +1,7 @@
+"use client";
 import React from 'react';
 import { motion } from 'framer-motion';
-import { FEATURED_PROJECTS } from '../constants';
+import { FEATURED_PROJECTS } from '@/constants';
 import { ArrowRight, ArrowUpRight } from 'lucide-react';
 
 const FeaturedProjects: React.FC = () => {
