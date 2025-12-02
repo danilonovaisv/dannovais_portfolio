@@ -2,135 +2,72 @@
 
 import React, { useId } from 'react';
 import { motion } from 'framer-motion';
-import { ArrowRight } from 'lucide-react';
-import { CONTACT_INFO, SOCIALS } from '../../constants';
+import Link from 'next/link';
 
-const Contact: React.FC = () => {
-  const idPrefix = useId();
+const ContactSection: React.FC = () => {
+  const sectionId = useId();
+  const MAILTO = 'mailto:seuemail@exemplo.com'; // 🔁 TROCAR PELO SEU
+
   return (
-    <section id="contact" className="py-24 bg-light">
-      <div className="container mx-auto px-6 md:px-12">
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-16">
-          
-          {/* Left: Info */}
-          <motion.div
-            initial={{ opacity: 0, x: -30 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: true }}
-          >
-            <h2 className="text-4xl md:text-5xl font-bold text-primary mb-4 lowercase">contato</h2>
-            <p className="text-xl text-dark mb-12">Tem uma pergunta ou quer trabalhar junto?</p>
+    <section
+      id={sectionId}
+      className="bg-[var(--color-surface-main)] py-20 sm:py-24"
+    >
+      <div className="mx-auto max-w-6xl px-6">
+        <motion.div
+          className="grid gap-10 md:grid-cols-[minmax(0,1.3fr)_minmax(0,1fr)] md:items-start"
+          initial={{ opacity: 0, y: 32 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, margin: '-80px' }}
+          transition={{ duration: 0.6 }}
+        >
+          <div>
+            <p className="text-xs font-semibold uppercase tracking-[0.18em] text-slate-500">
+              contato
+            </p>
+            <h2 className="mt-3 text-2xl font-semibold text-[#111111] sm:text-3xl">
+              Bora conversar sobre o próximo projeto?
+            </h2>
+            <p className="mt-4 max-w-xl text-sm text-slate-700">
+              Se você está planejando uma nova campanha, lançando um produto ou
+              revisitando o posicionamento da sua marca, posso ajudar a traduzir
+              objetivos de negócio em soluções visuais e experiências coerentes.
+            </p>
 
-            <div className="space-y-6 mb-12">
-                {CONTACT_INFO.map((item) => (
-                    <a 
-                        key={item.label} 
-                        href={item.href}
-                        className="flex items-center gap-4 text-dark hover:text-primary transition-colors text-lg font-medium group"
-                    >
-                        <span className="p-3 bg-white rounded-full text-primary shadow-sm group-hover:scale-110 transition-transform">
-                            {item.icon}
-                        </span>
-                        {item.label}
-                    </a>
-                ))}
+            <div className="mt-8 flex flex-wrap items-center gap-4">
+              <Link href={MAILTO} className="inline-flex items-center rounded-full bg-[#111111] px-6 py-3 text-sm font-medium text-white shadow-md">
+                enviar um e-mail
+              </Link>
+              <p className="text-xs text-slate-600">
+                Me conta um pouco do contexto, prazos e objetivos. Eu respondo
+                com sugestões de caminhos possíveis.
+              </p>
             </div>
+          </div>
 
-            <div className="flex gap-4">
-                {SOCIALS.map((social) => (
-                    <a
-                        key={social.platform}
-                        href={social.url}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="p-3 bg-white rounded-full text-dark hover:text-primary hover:scale-110 transition-all shadow-sm"
-                        aria-label={social.platform}
-                    >
-                        {social.icon}
-                    </a>
-                ))}
+          <div className="space-y-4 rounded-3xl bg-white p-6 shadow-sm shadow-slate-200 text-sm text-slate-700">
+            <p className="text-[11px] font-semibold uppercase tracking-[0.16em] text-slate-500">
+              infos rápidas
+            </p>
+            <div className="space-y-2 text-sm">
+              <div>
+                <p className="text-xs font-semibold text-slate-500">Disponível para</p>
+                <p>freelance, consultoria criativa e collabs com equipes.</p>
+              </div>
+              <div>
+                <p className="text-xs font-semibold text-slate-500">Formato</p>
+                <p>projetos pontuais, ongoing ou apoio em sprints específicos.</p>
+              </div>
             </div>
-          </motion.div>
-
-          {/* Right: Form */}
-          <motion.div
-            initial={{ opacity: 0, x: 30 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: true }}
-            className="bg-white p-8 md:p-10 rounded-3xl shadow-lg border border-gray-100"
-          >
-            <form 
-                action="https://formsubmit.co/danilo@portfoliodanilo.com" 
-                method="POST"
-                className="space-y-6"
-            >
-                {/* Honeypot */}
-                <input type="text" name="_honey" className="hidden" />
-                {/* Disable Captcha */}
-                <input type="hidden" name="_captcha" value="false" />
-
-                <div>
-                    <label htmlFor={`${idPrefix}-name`} className="block text-sm font-semibold text-gray-600 mb-2">Seu nome</label>
-                    <input 
-                        type="text" 
-                        id={`${idPrefix}-name`} 
-                        name="name" 
-                        required 
-                        className="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary transition-all"
-                        placeholder="João da Silva"
-                    />
-                </div>
-
-                <div>
-                    <label htmlFor={`${idPrefix}-email`} className="block text-sm font-semibold text-gray-600 mb-2">Seu email</label>
-                    <input 
-                        type="email" 
-                        id={`${idPrefix}-email`} 
-                        name="email" 
-                        required 
-                        className="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary transition-all"
-                        placeholder="joao@empresa.com"
-                    />
-                </div>
-
-                <div>
-                    <label htmlFor={`${idPrefix}-phone`} className="block text-sm font-semibold text-gray-600 mb-2">Telefone</label>
-                    <input 
-                        type="tel" 
-                        id={`${idPrefix}-phone`} 
-                        name="phone" 
-                        required 
-                        className="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary transition-all"
-                        placeholder="(11) 99999-9999"
-                    />
-                </div>
-
-                <div>
-                    <label htmlFor={`${idPrefix}-message`} className="block text-sm font-semibold text-gray-600 mb-2">Sua mensagem</label>
-                    <textarea 
-                        id={`${idPrefix}-message`} 
-                        name="message" 
-                        required 
-                        rows={4}
-                        className="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary transition-all resize-none"
-                        placeholder="Conte-me sobre seu projeto..."
-                    />
-                </div>
-
-                <button 
-                    type="submit"
-                    className="w-full bg-primary text-white font-bold py-4 rounded-xl hover:bg-blue-700 transition-colors flex items-center justify-center gap-2 group"
-                >
-                    Enviar Mensagem
-                    <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
-                </button>
-            </form>
-          </motion.div>
-
-        </div>
+            <div className="pt-2 text-xs text-slate-500">
+              * Podemos começar com uma conversa rápida para alinhar contexto,
+              expectativas e fit.
+            </div>
+          </div>
+        </motion.div>
       </div>
     </section>
   );
 };
 
-export default Contact;
+export default ContactSection;

@@ -1,73 +1,48 @@
-"use client";
+'use client';
 
-import React from "react";
-import { motion } from "framer-motion";
-import Link from "next/link";
+import React, { useId } from 'react';
+import { motion } from 'framer-motion';
 
-const ContactSection: React.FC = () => {
-  const MAILTO = "mailto:dannovaisv@gmail.com"; // 🔁 TROCAR PELO SEU
+const BRANDS = [
+  'Fintech X',
+  'Startup Y',
+  'Marca Global Z',
+  'Educação',
+  'Cultura',
+  'SaaS & Tech',
+];
 
+const BrandsStrip: React.FC = () => {
+  const sectionId = useId();
+  
   return (
-    <section
-      id="contact"
-      className="bg-[var(--color-surface-main)] py-20 sm:py-24"
-    >
+    <section id={sectionId} className="bg-[#0057FF] py-10 text-white">
       <div className="mx-auto max-w-6xl px-6">
         <motion.div
-          className="grid gap-10 md:grid-cols-[minmax(0,1.3fr)_minmax(0,1fr)] md:items-start"
-          initial={{ opacity: 0, y: 32 }}
+          className="flex flex-col gap-6 sm:flex-row sm:items-center sm:justify-between"
+          initial={{ opacity: 0, y: 24 }}
           whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, margin: "-80px" }}
-          transition={{ duration: 0.6 }}
+          viewport={{ once: true, margin: '-80px' }}
+          transition={{ duration: 0.5 }}
         >
           <div>
-            <p className="text-xs font-semibold uppercase tracking-[0.18em] text-slate-500">
-              contato
+            <p className="text-xs font-semibold uppercase tracking-[0.18em] text-white/70">
+              marcas & segmentos
             </p>
-            <h2 className="mt-3 text-2xl font-semibold text-[#111111] sm:text-3xl">
-              Bora conversar sobre o próximo projeto?
+            <h2 className="mt-2 text-lg font-semibold sm:text-xl">
+              Projetos realizados com marcas de diferentes tamanhos e setores.
             </h2>
-            <p className="mt-4 max-w-xl text-sm text-slate-700">
-              Se você está planejando uma nova campanha, lançando um produto ou
-              revisitando o posicionamento da sua marca, posso ajudar a traduzir
-              objetivos de negócio em soluções visuais e experiências coerentes.
-            </p>
-
-            <div className="mt-8 flex flex-wrap items-center gap-4">
-              <Link href={MAILTO}>
-                <a className="inline-flex items-center rounded-full bg-[#111111] px-6 py-3 text-sm font-medium text-white shadow-md">
-                  enviar um e-mail
-                </a>
-              </Link>
-              <p className="text-xs text-slate-600">
-                Me conta um pouco do contexto, prazos e objetivos. Eu respondo
-                com sugestões de caminhos possíveis.
-              </p>
-            </div>
           </div>
 
-          <div className="space-y-4 rounded-3xl bg-white p-6 shadow-sm shadow-slate-200 text-sm text-slate-700">
-            <p className="text-[11px] font-semibold uppercase tracking-[0.16em] text-slate-500">
-              infos rápidas
-            </p>
-            <div className="space-y-2 text-sm">
-              <div>
-                <p className="text-xs font-semibold text-slate-500">
-                  Disponível para
-                </p>
-                <p>freelance, consultoria criativa e collabs com equipes.</p>
-              </div>
-              <div>
-                <p className="text-xs font-semibold text-slate-500">Formato</p>
-                <p>
-                  projetos pontuais, ongoing ou apoio em sprints específicos.
-                </p>
-              </div>
-            </div>
-            <div className="pt-2 text-xs text-slate-500">
-              * Podemos começar com uma conversa rápida para alinhar contexto,
-              expectativas e fit.
-            </div>
+          <div className="grid grid-cols-2 gap-3 text-sm sm:flex sm:flex-wrap sm:gap-4">
+            {BRANDS.map((brand) => (
+              <span
+                key={brand}
+                className="rounded-full bg-white/10 px-4 py-1.5 text-center text-xs font-medium tracking-wide text-white/90 backdrop-blur"
+              >
+                {brand}
+              </span>
+            ))}
           </div>
         </motion.div>
       </div>
@@ -75,4 +50,4 @@ const ContactSection: React.FC = () => {
   );
 };
 
-export default ContactSection;
+export default BrandsStrip;

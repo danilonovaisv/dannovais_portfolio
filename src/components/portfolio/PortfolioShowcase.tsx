@@ -1,15 +1,17 @@
-"use client";
+'use client';
 
-import { motion } from "framer-motion";
-import React from "react";
+import React, { useId } from 'react';
+import { motion } from 'framer-motion';
 
 const HIGHLIGHT_VIDEO =
-  "https://aymuvxysygrwoicsjgxj.supabase.co/storage/v1/object/public/project-videos/VIDEO-APRESENTACAO-PORTFOLIO.mp4";
+  'https://aymuvxysygrwoicsjgxj.supabase.co/storage/v1/object/public/project-videos/VIDEO-APRESENTACAO-PORTFOLIO.mp4';
 
 const PortfolioShowcase: React.FC = () => {
+  const sectionId = useId();
+  
   return (
     <section
-      id="portfolio-intro"
+      id={sectionId}
       className="bg-[var(--color-surface-main)] py-16 sm:py-20"
     >
       <div className="mx-auto max-w-6xl px-6">
@@ -18,7 +20,7 @@ const PortfolioShowcase: React.FC = () => {
           className="mb-10 flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between"
           initial={{ opacity: 0, y: 24 }}
           whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, margin: "-80px" }}
+          viewport={{ once: true, margin: '-80px' }}
           transition={{ duration: 0.6 }}
         >
           <div>
@@ -43,7 +45,7 @@ const PortfolioShowcase: React.FC = () => {
             className="relative overflow-hidden rounded-[32px] bg-black shadow-[0_24px_80px_rgba(15,23,42,0.35)]"
             initial={{ opacity: 0, y: 40, scale: 0.97 }}
             whileInView={{ opacity: 1, y: 0, scale: 1 }}
-            viewport={{ once: true, margin: "-80px" }}
+            viewport={{ once: true, margin: '-80px' }}
             transition={{ duration: 0.7 }}
           >
             <video
@@ -85,15 +87,15 @@ const PortfolioShowcase: React.FC = () => {
             className="flex flex-col justify-between gap-8"
             initial={{ opacity: 0, y: 32 }}
             whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, margin: "-80px" }}
+            viewport={{ once: true, margin: '-80px' }}
             transition={{ duration: 0.6, delay: 0.1 }}
           >
             <div className="space-y-4 text-sm text-slate-700">
               <p>
-                Cada projeto parte de uma pergunta clara:{" "}
+                Cada projeto parte de uma pergunta clara:{' '}
                 <span className="font-medium">
                   qual é a história que essa marca precisa contar agora?
-                </span>{" "}
+                </span>{' '}
                 A partir disso, conecto estratégia, narrativa visual e
                 experiência para construir peças coerentes em múltiplos pontos
                 de contato.

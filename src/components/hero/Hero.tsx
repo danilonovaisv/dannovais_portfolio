@@ -1,14 +1,15 @@
 "use client";
 
-import React from "react";
+import React, { useId } from "react";
 import Link from "next/link";
 import { motion, useReducedMotion } from "framer-motion";
 import { ArrowRight } from "lucide-react";
 import Scene3D from "./Scene3D";
+import type { Variants } from "framer-motion";
 
 const heroLines = ["Design,", "não é só", "estética."];
 
-const containerVariants = {
+const containerVariants: Variants = {
   hidden: { opacity: 0, y: 24 },
   visible: {
     opacity: 1,
@@ -21,7 +22,7 @@ const containerVariants = {
   },
 };
 
-const lineVariants = {
+const lineVariants: Variants = {
   hidden: {
     opacity: 0,
     y: 32,
@@ -39,7 +40,7 @@ const lineVariants = {
   }),
 };
 
-const rightColumnVariants = {
+const rightColumnVariants: Variants = {
   hidden: { opacity: 0, y: 40, scale: 0.96 },
   visible: {
     opacity: 1,
@@ -55,6 +56,7 @@ const rightColumnVariants = {
 
 const Hero: React.FC = () => {
   const reduceMotion = useReducedMotion();
+  const sectionId = useId();
 
   const handleScrollToManifesto = () => {
     const el = document.getElementById("manifesto");
@@ -64,7 +66,7 @@ const Hero: React.FC = () => {
 
   return (
     <section
-      id="hero"
+      id={sectionId}
       className="relative overflow-hidden bg-[#F4F5F7] pb-24 pt-28 sm:pt-32"
     >
       <div className="mx-auto flex min-h-[80vh] max-w-6xl flex-col gap-12 px-6 lg:min-h-[90vh] lg:flex-row lg:items-center lg:gap-16">
@@ -117,18 +119,18 @@ const Hero: React.FC = () => {
             transition={{ delay: 0.8, duration: 0.5 }}
           >
             <Link href="/sobre">
-              <motion.a
+              <motion.div
                 whileHover={
                   reduceMotion
                     ? {}
                     : { scale: 1.02, y: -1, transition: { duration: 0.18 } }
                 }
                 whileTap={reduceMotion ? {} : { scale: 0.97, y: 0 }}
-                className="group inline-flex items-center gap-2 rounded-full bg-[#0057FF] px-6 py-3 text-sm font-medium text-white shadow-lg shadow-blue-500/30"
+                className="group inline-flex items-center gap-2 rounded-full bg-[#0057FF] px-6 py-3 text-sm font-medium text-white shadow-lg shadow-blue-500/30 cursor-pointer"
               >
                 get to know me better
                 <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
-              </motion.a>
+              </motion.div>
             </Link>
           </motion.div>
         </motion.div>
