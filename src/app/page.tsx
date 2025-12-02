@@ -1,5 +1,4 @@
 // app/page.tsx
-
 import BrandsStrip from "@/components/clients/BrandsStrip";
 import ContactSection from "@/components/Contact/ContactSection";
 import Footer from "@/components/layout/Footer";
